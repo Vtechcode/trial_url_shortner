@@ -1,0 +1,50 @@
+{%load static%}
+<html lang="en">
+<head>
+    <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>url-shortner</title>
+    <link rel="stylesheet" href="{% static 'one.css' %}">
+</head>
+<body>
+
+    <div class="url-shortner">
+        
+    <form id="post-form">
+        {% csrf_token %}
+        <input type="url" name="url" class="url-input" placeholder="Enter Url">
+        <div class="submit-url">
+        <input type="submit" name="sub">
+        </div>
+   
+    </form>
+
+    <div class="url-output">
+        <h2> Output </h2>
+    </div>
+        
+    </div>
+    
+    
+</body>
+<script type="text/javascript">
+    $(document).on('submit','#post-form',function(e){
+      e.preventDefault();
+  
+      $.ajax({
+        type:'POST',
+        url:'/create',
+        data:{
+          link:$('#link').val(),
+          csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+        },
+        success: function(data){
+          $('h2').html("localhost:8000/"+data)
+        }
+      });
+    });
+  </script>
+
+</html>
